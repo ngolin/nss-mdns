@@ -17,5 +17,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 autoreconf -i -f -v
+automake --add-missing
 ./configure --sysconfdir=/etc --localstatedir=/var CFLAGS="-Wall -W -Wextra" "$@"
 make clean

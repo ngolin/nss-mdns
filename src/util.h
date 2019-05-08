@@ -68,24 +68,19 @@ int ends_with(const char* name, const char* suffix);
 //
 // The two heuristics described above are disabled if mdns_allow_file
 // is not NULL.
-int verify_name_allowed_with_soa(const char* name, FILE* mdns_allow_file);
-
-typedef enum {
-    VERIFY_NAME_RESULT_NOT_ALLOWED,
-    VERIFY_NAME_RESULT_ALLOWED_IF_NO_LOCAL_SOA,
-    VERIFY_NAME_RESULT_ALLOWED
-} verify_name_result_t;
+int verify_name_allowed_with_soa(const char* name);
 
 // Tells us if the name is not allowed unconditionally, allowed only
 // if local_soa() returns false, or unconditionally allowed.
-verify_name_result_t verify_name_allowed(const char* name,
-                                         FILE* mdns_allow_file);
+int verify_name_allowed(const char* name);
 
 // Returns true if a DNS server claims authority over "local".
-int local_soa(void);
+int not_local_soa(void);
 
-// Returns the number of labels in a name.
-int label_count(const char* name);
+int dot_count_before_local(const char* name);
+
+// Returns `b.local` from `a.b.local`.
+const char* strip_name_to_next_dot(const char* name);
 
 // Converts from a name and addr into the hostent format, used by
 // gethostbyaddr_r.

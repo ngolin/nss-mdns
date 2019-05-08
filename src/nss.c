@@ -33,6 +33,7 @@
 
 #include "avahi.h"
 #include "util.h"
+#include <syslog.h>
 
 #if defined(NSS_IPV4_ONLY) && !defined(MDNS_MINIMAL)
 #define _nss_mdns_gethostbyname4_r _nss_mdns4_gethostbyname4_r
@@ -130,8 +131,7 @@ static enum nss_status gethostbyname_impl(const char* name, int af,
                                           userdata_t* u, int* errnop,
                                           int* h_errnop) {
 
-    int name_allowed;
-    FILE* mdns_allow_file = NULL;
+    int name_allowed_dot_count;
 
 #ifdef NSS_IPV4_ONLY
     if (af == AF_UNSPEC) {
@@ -160,16 +160,12 @@ static enum nss_status gethostbyname_impl(const char* name, int af,
 
     u->count = 0;
 
-#ifndef MDNS_MINIMAL
-    mdns_allow_file = fopen(MDNS_ALLOW_FILE, "r");
-#endif
-    name_allowed = verify_name_allowed_with_soa(name, mdns_allow_file);
-#ifndef MDNS_MINIMAL
-    if (mdns_allow_file)
-        fclose(mdns_allow_file);
-#endif
+    name_allowed_dot_count = verify_name_allowed_with_soa(name);
 
-    if (!name_allowed) {
+    openlog("nss-mdns", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
+    syslog(LOG_NOTICE, "Verify name: %s, %d", name, name_allowed_dot_count);
+    closelog();
+    if (!name_allowed_dot_count) {
         *errnop = EINVAL;
         *h_errnop = NO_RECOVERY;
         return NSS_STATUS_UNAVAIL;
@@ -180,6 +176,10 @@ static enum nss_status gethostbyname_impl(const char* name, int af,
         return NSS_STATUS_SUCCESS;
 
     case AVAHI_RESOLVE_RESULT_HOST_NOT_FOUND:
+        if (name_allowed_dot_count > 1) {
+            return gethostbyname_impl(strip_name_to_next_dot(name), af, u,
+                                      errnop, h_errnop);
+        }
         *errnop = ETIMEDOUT;
         *h_errnop = HOST_NOT_FOUND;
         return NSS_STATUS_NOTFOUND;

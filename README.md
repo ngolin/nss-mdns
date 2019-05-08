@@ -1,7 +1,7 @@
 # nss-mdns
 
-*Copyright 2004-2007 Lennart Poettering &lt;mzaffzqaf (at) 0pointer
-(dot) de&gt;*
+_Copyright 2004-2007 Lennart Poettering &lt;mzaffzqaf (at) 0pointer
+(dot) de&gt;_
 
 - [License](#license)
 - [Overview](#overview)
@@ -31,7 +31,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 `nss-mdns` is a plugin for the GNU Name Service Switch (NSS)
 functionality of the GNU C Library (`glibc`) providing host name
 resolution via [Multicast DNS](http://www.multicastdns.org/) (aka
-*Zeroconf*, aka *Apple Rendezvous*, aka *Apple Bonjour*), effectively
+_Zeroconf_, aka _Apple Rendezvous_, aka _Apple Bonjour_), effectively
 allowing name resolution by common Unix/Linux programs in the ad-hoc
 mDNS domain `.local`.
 
@@ -67,7 +67,6 @@ new NSS modules in `/lib`:
 - `libnss_mdns_minimal.so.2`
 - `libnss_mdns4_minimal.so.2`
 - `libnss_mdns6_minimal.so.2`
-
 
 `libnss_mdns.so.2`
 resolves both IPv6 and IPv4 addresses, `libnss_mdns4.so.2` only
@@ -122,80 +121,13 @@ use `glibc`'s `getent` tool:
 <pre>$ getent hosts <i>foo</i>.local
 192.168.50.4    foo.local</pre>
 
-Replace *foo* whith a host name that has been registered with
+Replace _foo_ whith a host name that has been registered with
 an mDNS responder. (Don't try to use the tools `host` or
 `nslookup` for these tests! They bypass the NSS and thus
 `nss-mdns` and issue their DNS queries directly.)
 
 If you run a firewall, don't forget to allow UDP traffic to the the
 mDNS multicast address `224.0.0.251` on port 5353.
-
-**Please note:** The line above makes `nss-mdns` authoritative for the
-`.local` domain, unless your unicast DNS server responds to `SOA`
-queries for the top level `local` name, or if the request has more
-than two labels. (`X.local` might be resolved with `nss-mdns` but
-`X.Y.local` will not be.) `nss-mdns` will check `SOA` before every
-request to resolve `.local` names, meaning that neither `nss-mdns` nor
-`Avahi` need to be disabled to allow `.local` queries to be served
-from unicast DNS. (These two checks are only enabled in minimal mode
-or if there is no `/etc/mdns.allow` file. Any domain, with any number
-of labels, (including `.local`) will still be served authoritatively
-from `nss-mdns` if specified in `/etc/mdns.allow`.)
-
-### `/etc/mdns.allow`
-
-`nss-mdns` has a simple configuration file `/etc/mdns.allow` for
-enabling name lookups via mDNS in other domains than `.local`.
-
-> Note: The "minimal" version of `nss-mdns` does not read `/etc/mdns.allow`
-> under any circumstances. It behaves as if the file does not exist.
-
-In the recommended configuration, no `/etc/mdns.allow` file is
-present. In this case:
-
-* If the request does not end with `.local` or `.local.`, it is rejected.
-  Example: `example.test` is rejected.
-
-* If the request has more than two labels, it is rejected. Example:
-  `foo.bar.local` is rejected. **This is the two-label limit heuristic.**
-
-* If, during a request, the system-configured unicast DNS (specified
-  in `/etc/resolv.conf`) reports an `SOA` record for the top-level
-  `local` name, the request is rejected. Example: `host -t SOA local`
-  returns something other than `Host local not found:
-  3(NXDOMAIN)`. **This is the unicast SOA heuristic.**
-
-* Otherwise, the request is processed.
-
-If present, the file should contain valid domain suffixes, seperated
-by newlines. Empty lines are ignored as are comments starting with
-`#`.
-
-To disable the two heuristics described above, and force all `.local`
-domains to be resolved regardless of label count or unicast SOA
-records, use this configuration file:
-
-```
-# /etc/mdns.allow
-.local.
-.local
-```
-
-To enable mDNS lookups of all names regardless of the domain suffix
-and disabling the two heuristics, add a line consisting of `*` only:
-
-```
-# /etc/mdns.allow
-*
-```
-
-To complete disable mDNS name lookups, use an empty file:
-```
-# /etc/mdns.allow
-```
-
-Again, remember that changing this file has no effect on the "minimal"
-version of `nss-mdns`.
 
 ## Requirements
 

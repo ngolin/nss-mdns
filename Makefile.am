@@ -22,7 +22,7 @@ EXTRA_DIST += src/map-file
 
 AM_CFLAGS = \
 	-DMDNS_ALLOW_FILE=\"$(MDNS_ALLOW_FILE)\" \
-	-DAVAHI_SOCKET=\"$(AVAHI_SOCKET)\"
+ 	-DAVAHI_SOCKET=\"$(AVAHI_SOCKET)\"
 
 AM_LDFLAGS=-avoid-version -module -export-dynamic
 
@@ -34,7 +34,7 @@ lib_LTLIBRARIES = \
 	libnss_mdns4_minimal.la \
 	libnss_mdns6_minimal.la
 
-check_PROGRAMS = nss-test avahi-test
+## check_PROGRAMS = nss-test avahi-test
 
 libnss_mdns_la_SOURCES=src/util.c src/util.h src/avahi.c src/avahi.h src/nss.c
 libnss_mdns_la_CFLAGS=$(AM_CFLAGS)
@@ -60,13 +60,13 @@ libnss_mdns6_minimal_la_SOURCES=$(libnss_mdns_la_SOURCES)
 libnss_mdns6_minimal_la_CFLAGS=$(libnss_mdns_la_CFLAGS) -DNSS_IPV6_ONLY=1 -DMDNS_MINIMAL
 libnss_mdns6_minimal_la_LDFLAGS=$(libnss_mdns_la_LDFLAGS)
 
-avahi_test_SOURCES = \
-	src/avahi.c src/avahi.h \
-	src/util.c src/util.h \
-	src/avahi-test.c
+## avahi_test_SOURCES = \
+##	src/avahi.c src/avahi.h \
+##	src/util.c src/util.h \
+## 	src/avahi-test.c
 
-nss_test_SOURCES = \
-	src/nss-test.c
+## nss_test_SOURCES = \
+## 	src/nss-test.c
 
 install-exec-hook:
 	rm -f $(DESTDIR)$(libdir)/libnss_mdns.la
@@ -86,12 +86,12 @@ uninstall-hook:
 
 
 # tests
-if ENABLE_TESTS
-TESTS = check_util
-check_PROGRAMS += check_util
-check_util_SOURCES = tests/check_util.c src/util.h
-check_util_CFLAGS = @CHECK_CFLAGS@
-check_util_LDADD = src/util.o @CHECK_LIBS@
-endif
+## if ENABLE_TESTS
+## TESTS = check_util
+## check_PROGRAMS += check_util
+## check_util_SOURCES = tests/check_util.c src/util.h
+## check_util_CFLAGS = @CHECK_CFLAGS@
+## check_util_LDADD = src/util.o @CHECK_LIBS@
+## endif
 
-EXTRA_DIST += tests/check_util.c
+## EXTRA_DIST += tests/check_util.c

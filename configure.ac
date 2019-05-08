@@ -33,23 +33,23 @@ AC_USE_SYSTEM_EXTENSIONS
 AM_SILENT_RULES([yes])
 
 # Conditionally enable unittests.
-AC_ARG_ENABLE([tests],
-  AS_HELP_STRING([--disable-tests],
-                 [disable building tests]))
+## AC_ARG_ENABLE([tests],
+##   AS_HELP_STRING([--disable-tests],
+##                  [disable building tests]))
+## 
+## AS_IF([test "x$enable_tests" != "xno"],
+##       [PKG_CHECK_MODULES([CHECK], [check >= 0.11],
+##                          [have_check=yes], [have_check=no])],
+##       [have_check=no])
 
-AS_IF([test "x$enable_tests" != "xno"],
-      [PKG_CHECK_MODULES([CHECK], [check >= 0.11],
-                         [have_check=yes], [have_check=no])],
-      [have_check=no])
+## AS_IF([test "x$have_check" = "xyes"],
+##       [],
+##       [AS_IF([test "x$enable_tests" = "xyes"],
+##            [AC_MSG_ERROR([Cannot enable tests: $CHECK_PKG_ERRORS])
+##     ])
+## ])
 
-AS_IF([test "x$have_check" = "xyes"],
-      [],
-      [AS_IF([test "x$enable_tests" = "xyes"],
-           [AC_MSG_ERROR([Cannot enable tests: $CHECK_PKG_ERRORS])
-    ])
-])
-
-AM_CONDITIONAL([ENABLE_TESTS], [test "x$have_check" = "xyes"])
+## AM_CONDITIONAL([ENABLE_TESTS], [test "x$have_check" = "xyes"])
 
 # Options for file locations.
 AC_ARG_VAR([AVAHI_SOCKET],
@@ -57,10 +57,10 @@ AC_ARG_VAR([AVAHI_SOCKET],
 AS_IF([test "x$AVAHI_SOCKET" = x],
       [AVAHI_SOCKET="${localstatedir}/run/avahi-daemon/socket"])
 
-AC_ARG_VAR([MDNS_ALLOW_FILE],
-           [Full path to the mdns.allow file, overriding default])
-AS_IF([test "x$MDNS_ALLOW_FILE" = x],
-      [MDNS_ALLOW_FILE="${sysconfdir}/mdns.allow"])
+## AC_ARG_VAR([MDNS_ALLOW_FILE],
+##            [Full path to the mdns.allow file, overriding default])
+## AS_IF([test "x$MDNS_ALLOW_FILE" = x],
+##       [MDNS_ALLOW_FILE="${sysconfdir}/mdns.allow"])
 
 # Checks for programs.
 AM_PROG_AR
@@ -71,7 +71,7 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
 # libtool stuff
-AC_DISABLE_STATIC
+## AC_DISABLE_STATIC
 LT_INIT
 
 # Checks for header files.
