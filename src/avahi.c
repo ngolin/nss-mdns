@@ -21,15 +21,15 @@
 #endif
 
 #include <sys/socket.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
+#include <string.h>
+#include <stdlib.h>
 #include <sys/un.h>
 #include <assert.h>
 #include <unistd.h>
-
+#include <syslog.h>
+#include <stdio.h>
 #include "avahi.h"
 #include "util.h"
 
@@ -78,6 +78,10 @@ avahi_resolve_name_with_socket(FILE* f, int af, const char* name,
     if (!(fgets(ln, sizeof(ln), f))) {
         return AVAHI_RESOLVE_RESULT_UNAVAIL;
     }
+
+    openlog("nss-mdns", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
+    syslog(LOG_NOTICE, "Receive data: %s", ln);
+    closelog();
 
     if (ln[0] != '+') {
         return AVAHI_RESOLVE_RESULT_HOST_NOT_FOUND;
@@ -139,6 +143,10 @@ avahi_resolve_address_with_socket(FILE* f, int af, const void* data, char* name,
     if (!(fgets(ln, sizeof(ln), f))) {
         return AVAHI_RESOLVE_RESULT_UNAVAIL;
     }
+
+    openlog("nss-mdns", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
+    syslog(LOG_NOTICE, "Receive data: %s", ln);
+    closelog();
 
     if (ln[0] != '+') {
         return AVAHI_RESOLVE_RESULT_HOST_NOT_FOUND;
