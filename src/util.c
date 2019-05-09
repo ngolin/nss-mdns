@@ -104,9 +104,9 @@ const char* strip_name_to_next_dot(const char* name) {
     assert(name);
     size_t i, len;
     len = strlen(name);
-    for (i = 0; i < len; i++) {
-        if (name[i] == '.')
-            return name + 1;
+    for (i = 1; i < len; i++) {
+        if (name[i-1] == '.')
+            return name + i;
     }
     return NULL;
 }
