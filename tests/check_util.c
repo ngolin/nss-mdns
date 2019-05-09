@@ -18,10 +18,10 @@
 
 #define _DEFAULT_SOURCE
 
+#include <stdlib.h>
 #include <check.h>
 #include <errno.h>
 #include <netdb.h>
-#include <stdlib.h>
 #include <stdio.h>
 #include "../src/util.h"
 

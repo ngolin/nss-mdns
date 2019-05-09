@@ -20,12 +20,12 @@
 #include <config.h>
 #endif
 
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <arpa/inet.h>
+#include <string.h>
 #include <stdio.h>
 #include <netdb.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <string.h>
-#include <arpa/inet.h>
 
 static int gai(const char* node) {
     struct addrinfo hints;

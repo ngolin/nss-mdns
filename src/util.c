@@ -22,9 +22,9 @@
 
 #include <sys/select.h>
 #include <sys/socket.h>
-#include <errno.h>
 #include <string.h>
 #include <assert.h>
+#include <errno.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <netdb.h>

@@ -20,20 +20,20 @@
 #include <config.h>
 #endif
 
-#include <unistd.h>
-#include <errno.h>
+#include <sys/socket.h>
+#include <stdbool.h>
 #include <string.h>
 #include <assert.h>
-#include <netdb.h>
-#include <sys/socket.h>
-#include <nss.h>
-#include <stdio.h>
-#include <stdbool.h>
+#include <unistd.h>
 #include <stdlib.h>
+#include <syslog.h>
+#include <errno.h>
+#include <netdb.h>
+#include <stdio.h>
+#include <nss.h>
 
 #include "avahi.h"
 #include "util.h"
-#include <syslog.h>
 
 #if defined(NSS_IPV4_ONLY) && !defined(MDNS_MINIMAL)
 #define _nss_mdns_gethostbyname4_r _nss_mdns4_gethostbyname4_r

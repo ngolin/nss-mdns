@@ -19,8 +19,8 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <inttypes.h>
 #include <sys/types.h>
+#include <inttypes.h>
 
 // Maximum number of entries to return.
 #define MAX_ENTRIES 16
