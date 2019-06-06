@@ -128,7 +128,7 @@ static enum nss_status gethostbyname_impl(
     struct userdata_t *u,
     int *errnop,
     int *h_errnop,
-    uint32_t *ttlp)
+    int32_t *ttlp)
 {
 
 #ifdef NSS_IPV4_ONLY
@@ -245,7 +245,7 @@ enum nss_status _nss_mdns_gethostbyname2_r(
     size_t buflen, int *errnop,
     int *h_errnop)
 {
-  uint32_t ttlp;
+  int32_t ttlp;
   return _nss_mdns_gethostbyname3_r(name, af, result, buffer, buflen, errnop,
                                     h_errnop, &ttlp, NULL);
 }

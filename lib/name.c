@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <resolv.h>
 #include <stddef.h>
+#include <string.h>
 #include <netdb.h>
 #include "name.h"
 

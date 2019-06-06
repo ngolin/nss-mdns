@@ -8,7 +8,7 @@ enum nss_status mdns_resolve_name(
     int af,
     const char *name,
     struct userdata_t *userdata,
-    uint32_t *ttlp)
+    int32_t *ttlp)
 {
   struct query_address_result_t address_result;
   // load up address_result

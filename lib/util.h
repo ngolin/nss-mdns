@@ -2,7 +2,9 @@
 #define __UTIL_H
 
 #include <stdint.h>
-
+#include <netdb.h>
+#include "buff.h"
+#include "util.h"
 #define MAX_ENTRIES 16
 
 struct ipv4_address_t
