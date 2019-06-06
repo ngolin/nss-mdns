@@ -12,7 +12,7 @@ struct ipv4_address_t
 
 struct ipv6_address_t
 {
-  uint8_t address[16];
+  uint32_t address[4];
 };
 
 struct query_address_result_t
