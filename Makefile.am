@@ -18,7 +18,7 @@ EXTRA_DIST=bootstrap.sh README.md ACKNOWLEDGEMENTS.md NEWS.md LICENSE
 ACLOCAL_AMFLAGS=-I m4
 
 # src
-EXTRA_DIST += src/map-file
+EXTRA_DIST += lib/map-file
 
 AM_CFLAGS = \
 	-DMDNS_ALLOW_FILE=\"$(MDNS_ALLOW_FILE)\" \
@@ -36,9 +36,9 @@ lib_LTLIBRARIES = \
 
 ## check_PROGRAMS = nss-test avahi-test
 
-libnss_mdns_la_SOURCES=src/util.c src/util.h src/avahi.c src/avahi.h src/nss.c
+libnss_mdns_la_SOURCES=lib/lnss.c lib/util.c lib/util.h lib/buff.c lib/buff.h lib/mdns.c lib/mdns.h lib/name.c lib/name.h lib/sock.c lib/sock.h
 libnss_mdns_la_CFLAGS=$(AM_CFLAGS)
-libnss_mdns_la_LDFLAGS=$(AM_LDFLAGS) -shrext .so.2 -Wl,-version-script=$(srcdir)/src/map-file
+libnss_mdns_la_LDFLAGS=$(AM_LDFLAGS) -shrext .so.2 -Wl,-version-script=$(srcdir)/lib/map-file
 
 libnss_mdns_minimal_la_SOURCES=$(libnss_mdns_la_SOURCES)
 libnss_mdns_minimal_la_CFLAGS=$(libnss_mdns_la_CFLAGS) -DMDNS_MINIMAL
@@ -60,13 +60,6 @@ libnss_mdns6_minimal_la_SOURCES=$(libnss_mdns_la_SOURCES)
 libnss_mdns6_minimal_la_CFLAGS=$(libnss_mdns_la_CFLAGS) -DNSS_IPV6_ONLY=1 -DMDNS_MINIMAL
 libnss_mdns6_minimal_la_LDFLAGS=$(libnss_mdns_la_LDFLAGS)
 
-## avahi_test_SOURCES = \
-##	src/avahi.c src/avahi.h \
-##	src/util.c src/util.h \
-## 	src/avahi-test.c
-
-## nss_test_SOURCES = \
-## 	src/nss-test.c
 
 install-exec-hook:
 	rm -f $(DESTDIR)$(libdir)/libnss_mdns.la
@@ -84,14 +77,3 @@ uninstall-hook:
 	rm -f $(DESTDIR)$(libdir)/libnss_mdns6.so.2
 	rm -f $(DESTDIR)$(libdir)/libnss_mdns6_minimal.so.2
 
-
-# tests
-## if ENABLE_TESTS
-## TESTS = check_util
-## check_PROGRAMS += check_util
-## check_util_SOURCES = tests/check_util.c src/util.h
-## check_util_CFLAGS = @CHECK_CFLAGS@
-## check_util_LDADD = src/util.o @CHECK_LIBS@
-## endif
-
-## EXTRA_DIST += tests/check_util.c

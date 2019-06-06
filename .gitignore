@@ -27,4 +27,5 @@ Makefile.in
 /nss-test
 /stamp-h1
 /test-driver
-/.vscode
+/.vscode/*
+!/.vscode/*.json

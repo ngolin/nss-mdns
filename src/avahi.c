@@ -47,7 +47,7 @@ static FILE* open_socket(void) {
 
     memset(&sa, 0, sizeof(sa));
     sa.sun_family = AF_UNIX;
-    strncpy(sa.sun_path, AVAHI_SOCKET, sizeof(sa.sun_path) - 1);
+    strncpy(sa.sun_path, "/run/avahi-daemon/socket", sizeof(sa.sun_path) - 1);
     sa.sun_path[sizeof(sa.sun_path) - 1] = 0;
 
     if (connect(fd, (struct sockaddr*)&sa, sizeof(sa)) < 0)

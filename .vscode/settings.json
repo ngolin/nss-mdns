@@ -1,0 +1,16 @@
+{
+  "files.associations": {
+    "netdb.h": "c",
+    "resolv.h": "c",
+    "nss.h": "c",
+    "assert.h": "c",
+    "string.h": "c",
+    "socket.h": "c",
+    "select.h": "c",
+    "stddef.h": "c",
+    "inet.h": "c"
+  },
+  "C_Cpp.default.cppStandard": "c++11",
+  "C_Cpp.default.cStandard": "c11",
+  "C_Cpp.default.defines": ["_GNU_SOURCE"]
+}

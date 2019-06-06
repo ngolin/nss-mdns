@@ -16,6 +16,9 @@
 # License along with nss-mdns; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
+# sudo apt install autoconf
+# sudo apt install libtool
+
 autoreconf -i -f -v
 automake --add-missing
 ./configure --sysconfdir=/etc --localstatedir=/var CFLAGS="-Wall -W -Wextra" "$@"
